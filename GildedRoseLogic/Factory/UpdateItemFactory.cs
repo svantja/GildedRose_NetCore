@@ -17,18 +17,21 @@ namespace GildedRoseLogic.Factory
                 throw new ArgumentNullException(nameof(item));
             }
 
-            switch (item.Name) {                 
-                case "Aged Brie":
+            switch (item) {                 
+                case AgedBrieItem agedBrieItem:
                     return new AgedBrieQualityStrategy();
-                case "Backstage passes to a TAFKAL80ETC concert":
+                case BackstagePassesItem backstagePassesItem:
                     return new BackstagePassesQualityStrategy();
-                case "Sulfuras, Hand of Ragnaros":
+                case SulfurasItem sulfurasItem:
                     return new SulfurasQualityStrategy();
-                case "Conjured Mana Cake":
+                case ConjuredItem conjuredItem:
                     return new ConjuredQualityStrategy();
                 default:
                     return new DefaultQualityStrategy();
             }
+
+            // get type of ConjuredItem
+            var t = typeof(ConjuredItem);
         }
     }
 }
