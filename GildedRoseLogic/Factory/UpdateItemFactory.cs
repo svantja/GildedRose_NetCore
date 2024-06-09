@@ -29,9 +29,6 @@ namespace GildedRoseLogic.Factory
                 default:
                     return new DefaultQualityStrategy();
             }
-
-            // get type of ConjuredItem
-            var t = typeof(ConjuredItem);
         }
     }
 }
