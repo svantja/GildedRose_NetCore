@@ -14,15 +14,6 @@ public class Program
     IList<Item> Items;
     int _days;
 
-    public List<Item> items => (List<Item>)Items;
-
-    public Program(IUpdateItemFactory updateItemFactory, int days)
-    {
-        _updateItemFactory = updateItemFactory;
-        _days = days;
-        Items = GenerateDefaultItems();
-    }
-
     public static void Main(string[] args)
     {
         HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
@@ -31,11 +22,9 @@ public class Program
 
         using IHost host = builder.Build();
 
-        var app = new Program(host.Services.GetRequiredService<IUpdateItemFactory>(), GetDays(args));
+        var gildedRose = new GildedRose(host.Services.GetRequiredService<IUpdateItemFactory>(), GetDays(args));
 
-        Console.WriteLine("OMGHAI!");
-
-        app.UpdateQuality();
+        gildedRose.UpdateQuality();
     }
 
     public static int GetDays(string[] args)
@@ -48,55 +37,4 @@ public class Program
 
         return days;
     }
-
-    //write method for generating default items
-    public static List<Item> GenerateDefaultItems()
-    {
-        return new List<Item>
-        {
-            new DefaultItem {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-            new AgedBrieItem {Name = "Aged Brie", SellIn = 2, Quality = 0},
-            new DefaultItem {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-            new SulfurasItem {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-            new SulfurasItem {Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80},
-            new BackstagePassesItem
-            {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
-                SellIn = 15,
-                Quality = 20
-            },
-            new BackstagePassesItem
-            {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
-                SellIn = 10,
-                Quality = 49
-            },
-            new BackstagePassesItem
-            {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
-                SellIn = 5,
-                Quality = 49
-            },
-            // this conjured item does not work properly yet
-            new ConjuredItem {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-        };
-    }
-
-
-    public void UpdateQuality()
-    {
-        for (var i = 0; i < _days; i++)
-        {
-            Console.WriteLine("-------- day " + i + " --------");
-            Console.WriteLine("name, sellIn, quality");
-            foreach (var item in Items)
-            {
-                Console.WriteLine(item.Name + ", " + item.SellIn + ", " + item.Quality);
-                var strategy = _updateItemFactory.Create(item);
-                strategy.UpdateQuality(item);
-            }
-            Console.WriteLine("");
-        }
-    }
-
 }

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System;
 using VerifyXunit;
+using System.Linq;
 
 namespace GildedRoseTests; 
 
@@ -34,23 +35,76 @@ public class GildedRoseTest
     {
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.Services.AddScoped<IUpdateItemFactory, UpdateItemFactory>();
-        IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
         using IHost host = builder.Build();
-        Program app = new Program(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
+        GildedRose app = new GildedRose(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
         app.UpdateQuality();
-        Assert.Equal("foo", Items[0].Name);
+        Assert.Equal(0, app.ItemList[0].Quality);
     }
 
-    // Write test for verifying that the quality of an item is never negative
+    
     [Fact]
-    public void bar() {
+    public void VerifyQualityNeverNegative() {
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.Services.AddScoped<IUpdateItemFactory, UpdateItemFactory>();
 
         using IHost host = builder.Build();
 
-        Program app = new Program(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
+        GildedRose app = new GildedRose(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
         app.UpdateQuality();
-        app.items.ForEach(item => Assert.True(item.Quality >= 0));
+        app.ItemList.ForEach(item => Assert.True(item.Quality >= 0));
+    }
+
+    [Fact]
+    public void VerifyQualityNeverMoreThanFifty()
+    {
+        HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+        builder.Services.AddScoped<IUpdateItemFactory, UpdateItemFactory>();
+
+        using IHost host = builder.Build();
+
+        GildedRose app = new GildedRose(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
+        app.UpdateQuality();
+        app.ItemList.ForEach(item =>
+        {
+            if (item is not SulfurasItem)
+            {
+                Assert.True(item.Quality <= 50);
+            }
+        });
+    }
+
+    [Fact]
+    public void VerifySulfurasStaysTheSame()
+    {
+        HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+        builder.Services.AddScoped<IUpdateItemFactory, UpdateItemFactory>();
+
+        using IHost host = builder.Build();
+
+        GildedRose app = new GildedRose(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
+        var initialQuality = app.ItemList.First(i => i is SulfurasItem).Quality;
+        var initialSellIn = app.ItemList.First(i => i is SulfurasItem).SellIn;
+        app.UpdateQuality();
+        var finalQuality = app.ItemList.First(i => i is SulfurasItem).Quality;
+        var finalSellIn = app.ItemList.First(i => i is SulfurasItem).SellIn;
+
+        Assert.Equal(initialQuality, finalQuality);
+        Assert.Equal(initialSellIn, finalSellIn);
+    }
+
+    [Fact]
+    public void VerifyAgedBrieQualityIncreasesOverTime()
+    {
+        HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+        builder.Services.AddScoped<IUpdateItemFactory, UpdateItemFactory>();
+
+        using IHost host = builder.Build();
+
+        GildedRose app = new GildedRose(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
+        var initialQuality = app.ItemList.First(i => i is AgedBrieItem).Quality;
+        app.UpdateQuality();
+        var finalQuality = app.ItemList.First(i => i is AgedBrieItem).Quality;
+
+        Assert.True(finalQuality > initialQuality);
     }
 }

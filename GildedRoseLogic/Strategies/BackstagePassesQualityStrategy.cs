@@ -4,28 +4,28 @@ namespace GildedRoseLogic.Strategies
 {
     public class BackstagePassesQualityStrategy : IUpdateItemQualityStrategy
     {
-        public void UpdateQuality(Item Items)
+        public void UpdateQuality(Item item)
         {
-            if (Items.Quality < 50)
+            if (item.Quality < 50)
             {
-                Items.Quality++;
+                item.Quality++;
 
-                if (Items.SellIn < 11 && Items.Quality < 50)
+                if (item.SellIn < 11 && item.Quality < 50)
                 {
-                    Items.Quality++;
+                    item.Quality++;
                 }
 
-                if (Items.SellIn < 6 && Items.Quality < 50)
+                if (item.SellIn < 6 && item.Quality < 50)
                 {
-                    Items.Quality++;
+                    item.Quality++;
                 }
             }
 
-            Items.SellIn--;
+            item.SellIn--;
 
-            if (Items.SellIn < 0)
+            if (item.SellIn < 0)
             {
-                Items.Quality = 0;
+                item.Quality = 0;
             }
         }
     }

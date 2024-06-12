@@ -4,14 +4,14 @@ namespace GildedRoseLogic.Strategies
 {
     public class AgedBrieQualityStrategy : IUpdateItemQualityStrategy
     {
-        public void UpdateQuality(Item Items)
+        public void UpdateQuality(Item item)
         {
-            Items.Quality = Items.Quality < 50 ? Items.Quality + 1 : Items.Quality;
-            Items.SellIn--;
+            item.Quality = item.Quality < 50 ? item.Quality + 1 : item.Quality;
+            item.SellIn--;
 
-            if (Items.SellIn < 0 && Items.Quality < 50)
+            if (item.SellIn < 0 && item.Quality < 50)
             {
-                Items.Quality++;
+                item.Quality++;
             }
         }
     }

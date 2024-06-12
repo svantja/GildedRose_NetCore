@@ -4,14 +4,14 @@ namespace GildedRoseLogic.Strategies
 {
     public class DefaultQualityStrategy : IUpdateItemQualityStrategy
     {
-        public void UpdateQuality(Item Items)
+        public void UpdateQuality(Item item)
         {
-            Items.Quality = Items.Quality > 0 ? Items.Quality - 1 : Items.Quality;
-            Items.SellIn--;
+            item.Quality = item.Quality > 0 ? item.Quality - 1 : item.Quality;
+            item.SellIn--;
 
-            if (Items.SellIn < 0 && Items.Quality > 0)
+            if (item.SellIn < 0 && item.Quality > 0)
             {
-                Items.Quality--;
+                item.Quality--;
             }
         }
     }

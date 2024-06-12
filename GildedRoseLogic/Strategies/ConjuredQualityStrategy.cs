@@ -4,17 +4,17 @@ namespace GildedRoseLogic.Strategies
 {
     public class ConjuredQualityStrategy : IUpdateItemQualityStrategy
     {
-        public void UpdateQuality(Item Items)
+        public void UpdateQuality(Item item)
         {
-            Items.Quality = Items.Quality > 0 ? Items.Quality - 2 : Items.Quality;
-            Items.SellIn--;
+            item.Quality = item.Quality > 0 ? item.Quality - 2 : item.Quality;
+            item.SellIn--;
 
-            if (Items.SellIn < 0 && Items.Quality > 0)
+            if (item.SellIn < 0 && item.Quality > 0)
             {
-                Items.Quality -= 2;
+                item.Quality -= 2;
             }
 
-            Items.Quality = Items.Quality < 0 ? 0 : Items.Quality;
+            item.Quality = item.Quality < 0 ? 0 : item.Quality;
         }
     }
 }
