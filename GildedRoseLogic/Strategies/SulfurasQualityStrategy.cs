@@ -4,10 +4,10 @@ namespace GildedRoseLogic.Strategies
 {
     public class SulfurasQualityStrategy : IUpdateItemQualityStrategy
     {
-        public void UpdateQuality(Item Items)
+        public void UpdateQuality(Item item)
         {
-            Items.SellIn = Items.SellIn;
-            Items.Quality = Items.Quality;
+            item.SellIn = item.SellIn;
+            item.Quality = item.Quality;
         }
     }
 }

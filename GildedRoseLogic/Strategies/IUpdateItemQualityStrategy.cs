@@ -9,6 +9,6 @@ namespace GildedRoseLogic.Strategies
 {
     public interface IUpdateItemQualityStrategy
     {
-        void UpdateQuality(Item Items);
+        void UpdateQuality(Item item);
     }
 }

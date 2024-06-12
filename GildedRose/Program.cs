@@ -11,16 +11,16 @@ namespace GildedRoseKata;
 public class Program
 {
     IUpdateItemFactory _updateItemFactory;
-    IList<Item> _items;
+    IList<Item> Items;
     int _days;
 
-    public List<Item> Items => (List<Item>)_items;
+    public List<Item> items => (List<Item>)Items;
 
     public Program(IUpdateItemFactory updateItemFactory, int days)
     {
         _updateItemFactory = updateItemFactory;
         _days = days;
-        _items = GenerateDefaultItems();
+        Items = GenerateDefaultItems();
     }
 
     public static void Main(string[] args)
@@ -89,7 +89,7 @@ public class Program
         {
             Console.WriteLine("-------- day " + i + " --------");
             Console.WriteLine("name, sellIn, quality");
-            foreach (var item in _items)
+            foreach (var item in Items)
             {
                 Console.WriteLine(item.Name + ", " + item.SellIn + ", " + item.Quality);
                 var strategy = _updateItemFactory.Create(item);

@@ -51,6 +51,6 @@ public class GildedRoseTest
 
         Program app = new Program(host.Services.GetRequiredService<IUpdateItemFactory>(), 30);
         app.UpdateQuality();
-        app.Items.ForEach(item => Assert.True(item.Quality >= 0));
+        app.items.ForEach(item => Assert.True(item.Quality >= 0));
     }
 }
