@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GildedRoseLogic.Factory;
 using GildedRoseShared.Entities;
-using GildedRoseLogic.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using GildedRoseLogic.Factory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GildedRoseKata;
 
@@ -30,11 +30,10 @@ public class Program
     public static int GetDays(string[] args)
     {
         int days = 2;
-        if (args.Length > 0)
+        if (!int.TryParse(args.FirstOrDefault(), out days))
         {
-            days = int.Parse(args[0]) + 1;
+            throw new ArgumentException("Provided arg is no valid number");
         }
-
         return days;
     }
 }
