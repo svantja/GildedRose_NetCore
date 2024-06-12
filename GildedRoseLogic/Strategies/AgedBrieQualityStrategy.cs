@@ -6,19 +6,12 @@ namespace GildedRoseLogic.Strategies
     {
         public void UpdateQuality(Item Items)
         {
-            if (Items.Quality < 50)
-            {
-                Items.Quality = Items.Quality + 1;
-            }
+            Items.Quality = Items.Quality < 50 ? Items.Quality + 1 : Items.Quality;
+            Items.SellIn--;
 
-            Items.SellIn = Items.SellIn - 1;
-
-            if (Items.SellIn < 0)
+            if (Items.SellIn < 0 && Items.Quality < 50)
             {
-                if (Items.Quality < 50)
-                {
-                    Items.Quality = Items.Quality + 1;
-                }
+                Items.Quality++;
             }
         }
     }

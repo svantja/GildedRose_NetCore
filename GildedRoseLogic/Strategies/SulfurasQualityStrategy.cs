@@ -6,8 +6,7 @@ namespace GildedRoseLogic.Strategies
     {
         public void UpdateQuality(Item Items)
         {
-            Items.SellIn = Items.SellIn;
-            Items.Quality = Items.Quality;
+            // No operation needed for Sulfuras as its Quality and SellIn do not change
         }
     }
 }

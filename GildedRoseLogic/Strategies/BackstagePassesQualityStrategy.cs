@@ -8,26 +8,20 @@ namespace GildedRoseLogic.Strategies
         {
             if (Items.Quality < 50)
             {
-                Items.Quality = Items.Quality + 1;
+                Items.Quality++;
 
-                if (Items.SellIn < 11)
+                if (Items.SellIn < 11 && Items.Quality < 50)
                 {
-                    if (Items.Quality < 50)
-                    {
-                        Items.Quality = Items.Quality + 1;
-                    }
+                    Items.Quality++;
                 }
 
-                if (Items.SellIn < 6)
+                if (Items.SellIn < 6 && Items.Quality < 50)
                 {
-                    if (Items.Quality < 50)
-                    {
-                        Items.Quality = Items.Quality + 1;
-                    }
+                    Items.Quality++;
                 }
             }
 
-            Items.SellIn = Items.SellIn - 1;
+            Items.SellIn--;
 
             if (Items.SellIn < 0)
             {

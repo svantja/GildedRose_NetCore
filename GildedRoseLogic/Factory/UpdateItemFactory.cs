@@ -17,18 +17,14 @@ namespace GildedRoseLogic.Factory
                 throw new ArgumentNullException(nameof(item));
             }
 
-            switch (item) {                 
-                case AgedBrieItem agedBrieItem:
-                    return new AgedBrieQualityStrategy();
-                case BackstagePassesItem backstagePassesItem:
-                    return new BackstagePassesQualityStrategy();
-                case SulfurasItem sulfurasItem:
-                    return new SulfurasQualityStrategy();
-                case ConjuredItem conjuredItem:
-                    return new ConjuredQualityStrategy();
-                default:
-                    return new DefaultQualityStrategy();
-            }
+            return item switch
+            {
+                AgedBrieItem agedBrieItem => new AgedBrieQualityStrategy(),
+                BackstagePassesItem backstagePassesItem => new BackstagePassesQualityStrategy(),
+                SulfurasItem sulfurasItem => new SulfurasQualityStrategy(),
+                ConjuredItem conjuredItem => new ConjuredQualityStrategy(),
+                _ => new DefaultQualityStrategy(),
+            };
         }
     }
 }
